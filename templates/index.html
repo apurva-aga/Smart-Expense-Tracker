@@ -1,0 +1,93 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Finance Tracker</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <img src="/static/assets/logo.png" alt="Logo" class="logo">
+        <h1 class="display-4">AI-Powered Personal Finance Tracker</h1>
+        <p class="lead">Take control of your finances with AI-driven insights.</p>
+        <form action="/dashboard" method="post">
+            <button type="submit" class="btn btn-primary btn-lg">View Dashboard</button>
+        </form>
+    </div>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Finance Tracker</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <div class="logo-container mb-4">
+            <img src="/static/assets/logo.png" alt="Logo" class="logo" id="dynamicLogo">
+            <!-- <svg class="logo" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="#007bff" />
+                <text x="50" y="58" text-anchor="middle" fill="white" font-size="24" font-weight="bold">$</text>
+            </svg> -->
+        </div>
+        <h1 class="display-4">Smart Expense - AI Finance Tracker</h1>
+        <p class="lead">Take control of your finances with AI-driven insights.</p>
+        <div class="features mt-5">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Expense Analytics</h3>
+                        <p>Visualize your spending habits with interactive charts and analytics.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3>AI Predictions</h3>
+                        <p>Our AI algorithms predict future expenses based on your spending patterns.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>User-Friendly</h3>
+                        <p>Easy-to-use interface that makes finance management a breeze.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-5">
+            <a href="/dashboard" class="btn btn-primary btn-lg">View Dashboard</a>
+        </div>
+    </div>
+    <footer class="text-center mt-5 pb-3">
+        <p>&copy; 2024 AI-Powered Finance Tracker | Made with ❤️ by You</p>
+    </footer>
+    <script>
+        // Logo animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const logo = document.getElementById('dynamicLogo');
+            if(logo) {
+                // Initial animation when page loads
+                logo.style.opacity = '0';
+                logo.style.transform = 'translateY(-20px)';
+                
+                setTimeout(() => {
+                    logo.style.transition = 'all 0.8s ease';
+                    logo.style.opacity = '1';
+                    logo.style.transform = 'translateY(0)';
+                }, 300);
+            }
+        });
+    </script>
+</body>
+</html>

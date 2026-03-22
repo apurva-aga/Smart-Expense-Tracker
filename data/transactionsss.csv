@@ -1,0 +1,29 @@
+date,description,amount,category
+2023-01-01,Grocery shopping,150.50,Groceries
+2023-01-03,Restaurant dinner,85.20,Dining
+2023-01-05,Electricity bill,120.00,Utilities
+2023-01-07,Movie tickets,35.00,Entertainment
+2023-01-10,Gas station,60.75,Transportation
+2023-01-12,Online shopping,95.30,Shopping
+2023-01-15,Phone bill,45.00,Utilities
+2023-01-18,Cafe coffee,12.50,Dining
+2023-01-20,Gym membership,50.00,Health
+2023-01-23,Bus fare,10.00,Transportation
+2023-01-25,Supermarket,175.40,Groceries
+2023-01-28,Doctor appointment,100.00,Health
+2023-01-30,Internet bill,55.00,Utilities
+2023-02-01,Grocery shopping,140.25,Groceries
+2023-02-03,Fast food,25.30,Dining
+2023-02-06,Water bill,40.00,Utilities
+2023-02-08,Concert tickets,75.00,Entertainment
+2023-02-11,Uber ride,30.50,Transportation
+2023-02-13,Clothing store,120.80,Shopping
+2023-02-16,Mobile top-up,20.00,Utilities
+2023-02-18,Restaurant lunch,42.60,Dining
+2023-02-20,Pharmacy,35.25,Health
+2023-02-22,Train ticket,15.00,Transportation
+2023-02-25,Grocery store,160.90,Groceries
+2023-02-28,Streaming subscription,12.99,Entertainment
+2025-04-23,pen,10.0,stationary
+2025-04-23,copy,20.0,stationary
+

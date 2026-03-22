@@ -1,0 +1,283 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="display-4">Your Financial Dashboard</h1>
+        <p class="lead">See your financial status at a glance.</p>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Total Expenses: ₹{{ total_expense }}</h3>
+            </div>
+            <div class="col-md-6">
+                <h3>Predicted Future Expenses: ₹{{ future_expense }}</h3>
+            </div>
+        </div>
+
+        <div class="table-responsive mt-5">
+            {{ tables | safe }}
+        </div>
+
+        <div class="mt-5">
+            <h3>Add New Expense</h3>
+            <form method="POST" action="/dashboard">
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" class="form-control" id="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <input type="text" class="form-control" id="description" name="description" required>
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount:</label>
+                    <input type="number" step="0.01" class="form-control" id="amount" name="amount" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Expense</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html> -->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/static/assets/logo.png" alt="Logo" class="navbar-logo" style="height: 40px; margin-right: 10px;">
+                Smart Expense - AI Finance Tracker
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1 class="display-4">Your Financial Dashboard</h1>
+        <p class="lead">View and manage your finances with AI-powered insights.</p>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Finance Summary Cards -->
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card bg-light mb-3">
+                    <div class="card-body">
+                        <h4 class="card-title">Total Expenses</h4>
+                        <p class="card-text expense-total">₹{{ total_expense }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card bg-light mb-3">
+                    <div class="card-body">
+                        <h4 class="card-title">Predicted Future Expenses</h4>
+                        <p class="card-text expense-prediction">₹{{ future_expense }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Visualization Section -->
+        <div class="row mt-4">
+            {% if category_chart %}
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Expenses by Category</h5>
+                    </div>
+                    <div class="card-body">
+                        <img src="data:image/png;base64,{{ category_chart }}" class="img-fluid" alt="Category Chart">
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if expense_trend %}
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Monthly Expense Trend</h5>
+                    </div>
+                    <div class="card-body">
+                        <img src="data:image/png;base64,{{ expense_trend }}" class="img-fluid" alt="Expense Trend">
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Add New Expense Form -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Add New Expense</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/dashboard">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="date">Date:</label>
+                            <input type="date" class="form-control" id="date" name="date" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="amount">Amount:</label>
+                            <input type="number" step="0.01" class="form-control" id="amount" name="amount" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="description">Description:</label>
+                            <input type="text" class="form-control" id="description" name="description" required onblur="predictCategory()">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <!-- <label for="category">Category:</label>
+                            <select class="form-control" id="category" name="category" required>
+                                {% if categories %}
+                                    {% for category in categories %}
+                                        <option value="{{ category }}">{{ category }}</option>
+                                    {% endfor %}
+                                {% else %}
+                                    <option value="Groceries">Groceries</option>
+                                    <option value="Dining">Dining</option>
+                                    <option value="Utilities">Utilities</option>
+                                    <option value="Entertainment">Entertainment</option>
+                                    <option value="Transportation">Transportation</option>
+                                    <option value="Shopping">Shopping</option>
+                                    <option value="Health">Health</option>
+                                    <option value="Housing">Housing</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Other">Other</option>
+                                {% endif %}
+                            </select> -->
+                            <label for="category">Category:</label>
+                                <select class="form-control" id="category" name="category">
+                                    <option value="">-- Select Existing --</option>
+                                    {% for category in categories %}
+                                    <option value="{{ category }}">{{ category }}</option>
+                                {% endfor %}
+                                </select>
+
+                            <label for="new_category" class="mt-2">Or Add New Category:</label>
+                            <input type="text" class="form-control" id="new_category" name="new_category" placeholder="e.g., Subscriptions">
+
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Expense</button>
+                </form>
+            </div>
+        </div>
+      
+       
+        
+        <!-- Transactions Table -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Recent Transactions</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    {% if tables %}
+                        {{ tables[0] | safe }}
+                    {% else %}
+                        <p class="text-center">No transactions found. Add your first expense above!</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function predictCategory() {
+            const description = document.getElementById('description').value;
+            if (description.trim() !== '') {
+                fetch('/predict_category', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `description=${encodeURIComponent(description)}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.predicted_category) {
+                        const categorySelect = document.getElementById('category');
+                        for (let i = 0; i < categorySelect.options.length; i++) {
+                            if (categorySelect.options[i].value === data.predicted_category) {
+                                categorySelect.selectedIndex = i;
+                                break;
+                            }
+                        }
+                    }
+                })
+                .catch(error => console.error('Error predicting category:', error));
+            }
+        }
+
+        // Set today's date as default
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').value = today;
+        });
+    </script>
+<script>
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const form = document.querySelector("form");
+    //     if (form) {
+    //         form.addEventListener("submit", function() {
+    //             document.getElementById("new_category").value = "";
+    //         });
+    //     }
+    // });
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+ 
+    
+</body>
+</html>
